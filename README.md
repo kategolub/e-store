@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MegaShop
+
+Full-stack e-commerce application built with Next.js, Nest.js, MongoDB and TypeScript.
+
+## Tech Stack
+
+**Frontend**
+- Next.js 16 (App Router) — SSR for SEO
+- TypeScript
+- Redux Toolkit — cart and auth state
+- TanStack Query — server state
+- Tailwind CSS + Shadcn/ui
+
+**Backend**
+- Nest.js — REST API
+- MongoDB + Mongoose
+- JWT authentication with httpOnly cookies
+- Role-based access control (admin/user)
+
+## Project Structure
+
+```
+store/
+  apps/
+    client/   ← Next.js frontend
+    server/   ← Nest.js backend
+  docker-compose.yml
+```
+
+## Prerequisites
+
+- Node.js 20+
+- Docker + Docker Compose
+- MongoDB Atlas account (free tier)
 
 ## Getting Started
 
-First, run the development server:
+### Option A — Docker (recommended)
 
+1. Clone the repo:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Copy environment files:
+```bash
+cp .env.example .env
+cp apps/server/.env.example apps/server/.env
+cp apps/client/.env.example apps/client/.env.local
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Fill in your values in `.env` and `apps/server/.env`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run:
+```bash
+docker compose up --build
+```
 
-## Learn More
+5. Open `http://localhost:3000`
 
-To learn more about Next.js, take a look at the following resources:
+### Option B — Local development
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone and install:
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Copy environment files:
+```bash
+cp apps/server/.env.example apps/server/.env
+cp apps/client/.env.example apps/client/.env.local
+```
 
-## Deploy on Vercel
+3. Fill in your values
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Run backend:
+```bash
+cd apps/server
+npm run start:dev
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Run frontend (new terminal):
+```bash
+cd apps/client
+npm run dev
+```
+
+6. Open `http://localhost:3000`
+
+## Create Admin User
+
+After starting the backend run:
+
+```bash
+cd apps/server
+npm run seed:admin
+```
+
+Default admin credentials:
+- Email: `admin@store.com`
+- Password: `admin123`
+
+**Change these immediately in production.**
+
+## Environment Variables
+
+### Backend (`apps/server/.env`)
+
+| Variable | Description |
+|---|---|
+| `PORT` | Server port (default 5001) |
+| `MONGO_URI` | MongoDB Atlas connection string |
+| `JWT_SECRET` | Secret for JWT signing |
+| `CLIENT_URL` | Frontend URL for CORS |
+
+### Frontend (`apps/client/.env.local`)
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | Backend API URL |
+
+## Features
+
+- Product catalog with search and pagination
+- Shopping cart (persisted to localStorage)
+- User authentication (register/login)
+- Guest checkout
+- Order management
+- Admin panel
+- Mobile responsive
+- Docker support
