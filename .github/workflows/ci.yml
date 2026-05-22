@@ -64,4 +64,3 @@ jobs:
         run: npm run build --workspace=apps/client
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          
