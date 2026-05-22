@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, develop]
   pull_request:
     branches: [main]
 
@@ -21,11 +21,14 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm install
 
+      - name: Install server dependencies
+        run: cd apps/server && npm install
+
       - name: Run tests
-        run: cd apps/server && ../../node_modules/.bin/jest
+        run: cd apps/server && npx jest
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -36,14 +39,20 @@ jobs:
     needs: test-server
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm install
+
+      - name: Install server dependencies
+        run: cd apps/server && npm install
 
       - name: Build
         run: cd apps/server && npm run build
@@ -53,14 +62,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: npm install
+
+      - name: Install client dependencies
+        run: cd apps/client && npm install
 
       - name: Build
         run: cd apps/client && npm run build
