@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, dev]
   pull_request:
     branches: [main]
 
@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: npm test --workspace=apps/server
+        run: cd apps/server && npm test
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
@@ -46,7 +46,7 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build --workspace=apps/server
+        run: cd apps/server && npm run build
 
   build-client:
     name: Build Frontend
@@ -63,6 +63,6 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build --workspace=apps/client
+        run: cd apps/client && npm run build
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
