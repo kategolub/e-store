@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run tests
-        run: cd apps/server && npm test
+        run: cd apps/server && npx jest
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
