@@ -10,7 +10,6 @@ export const dynamic = 'force-dynamic';
 
 export default async function ProductsPage() {
   const data = await getProducts();
-  console.log('data', data);
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
