@@ -8,7 +8,7 @@ import { getMyOrders } from '../../services/public/orders.service';
 import { Order, OrdersResponse } from '../../types/order';
 
 export default function OrdersPage() {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
   const router = useRouter();
   const [data, setData] = useState<OrdersResponse | null>(null);
   const [error, setError] = useState('');
@@ -17,8 +17,8 @@ export default function OrdersPage() {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!isAuthenticated) router.push('/auth/login');
-  }, [authLoading, isAuthenticated, router]);
+    if (!isAuthenticated && !user) router.push('/auth/login');
+  }, [authLoading, isAuthenticated, user]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -31,7 +31,7 @@ export default function OrdersPage() {
       .finally(() => setOrdersLoading(false));
   }, [isAuthenticated, page]);
 
-  if (authLoading || !isAuthenticated) return null;
+  if (authLoading || (!isAuthenticated && !user)) return null;
 
   if (ordersLoading) return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
