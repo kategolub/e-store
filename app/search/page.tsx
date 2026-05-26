@@ -29,7 +29,7 @@ export default async function SearchPage({ searchParams }: Props) {
         Results for "{search}"
       </h1>
       <p className="text-muted-foreground mt-1">
-        {data.total} product{data.total !== 1 ? 's' : ''} found
+        {data.pagination.total} product{data.pagination.total !== 1 ? 's' : ''} found
       </p>
     </div>
 
