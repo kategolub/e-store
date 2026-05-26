@@ -16,6 +16,12 @@ export default function OrdersPage() {
   const [ordersLoading, setOrdersLoading] = useState(false);
 
   useEffect(() => {
+  console.log('auth state:', { authLoading, isAuthenticated, user });
+  if (authLoading) return;
+  if (!isAuthenticated) router.push('/auth/login');
+}, [authLoading, isAuthenticated, router]);
+
+  useEffect(() => {
     if (authLoading) return;
     if (!isAuthenticated && !user) router.push('/auth/login');
   }, [authLoading, isAuthenticated, user]);

@@ -11,8 +11,9 @@ export const useAuth = () => {
     const dispatch = useAppDispatch();
     const user = useAppSelector((state: RootState) => state.auth.user);
     const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
+    const isInitialized = useAppSelector(state => state.auth.isInitialized);
 
-    const { data, isLoading, isFetching, isError, isSuccess } = useQuery({
+    const { data, isError, isSuccess } = useQuery({
         queryKey: ['me'],
         queryFn: getMe,
         retry: false,
@@ -44,7 +45,7 @@ export const useAuth = () => {
     return {
         user,
         isAuthenticated,
-        isLoading: isLoading || isFetching,
+        isLoading: !isInitialized,
         login: handleLogin,
         register: handleRegister,
         logout: handleLogout,
