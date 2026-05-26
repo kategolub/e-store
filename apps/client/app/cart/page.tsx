@@ -13,8 +13,6 @@ export default function CartPage() {
 
       {items.length ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* Items list */}
           <div className="lg:col-span-2">
             <div className="border rounded-lg divide-y">
               {items.map(item => (
@@ -23,7 +21,6 @@ export default function CartPage() {
             </div>
           </div>
 
-          {/* Summary */}
           <div className="lg:col-span-1">
             <div className="border rounded-lg p-6 flex flex-col gap-4 sticky top-24">
               <h2 className="text-xl font-semibold">Order Summary</h2>

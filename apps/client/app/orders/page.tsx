@@ -8,18 +8,20 @@ import { getMyOrders } from '../../services/public/orders.service';
 import { Order, OrdersResponse } from '../../types/order';
 
 export default function OrdersPage() {
-  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, user, isInitialized } = useAuth();
   const router = useRouter();
   const [data, setData] = useState<OrdersResponse | null>(null);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [ordersLoading, setOrdersLoading] = useState(false);
+  
+  console.log('orders page:', { authLoading, isAuthenticated, isInitialized });
 
   useEffect(() => {
-  console.log('auth state:', { authLoading, isAuthenticated, user });
-  if (authLoading) return;
-  if (!isAuthenticated) router.push('/auth/login');
-}, [authLoading, isAuthenticated, router]);
+    console.log('auth state:', { authLoading, isAuthenticated, user });
+    if (authLoading) return;
+    if (!isAuthenticated) router.push('/auth/login');
+  }, [authLoading, isAuthenticated, router]);
 
   useEffect(() => {
     if (authLoading) return;
