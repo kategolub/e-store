@@ -102,7 +102,7 @@ export default function OrdersPage() {
             </div>
           ))}
 
-          {data.pages > 1 && (
+          {data.pagination.pages > 1 && (
             <div className="flex items-center justify-center gap-4 mt-4">
               <button
                 onClick={() => setPage(p => p - 1)}
@@ -112,11 +112,11 @@ export default function OrdersPage() {
                 Previous
               </button>
               <span className="text-sm text-zinc-500">
-                Page {page} of {data.pages}
+                Page {page} of {data.pagination.pages}
               </span>
               <button
                 onClick={() => setPage(p => p + 1)}
-                disabled={page === data.pages}
+                disabled={page === data.pagination.pages}
                 className="text-sm underline disabled:opacity-50"
               >
                 Next

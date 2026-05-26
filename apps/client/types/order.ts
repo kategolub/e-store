@@ -10,8 +10,10 @@ export interface OrderPayload {
 
 export interface OrdersResponse {
   orders: Order[];
-  total: number;
-  pages: number;
+  pagination: {
+    total: number;
+    pages: number;
+  },
 };
 
 export interface OrderItem {

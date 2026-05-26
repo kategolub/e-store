@@ -50,7 +50,7 @@ export default async function SearchPage({ searchParams }: Props) {
       </div>
     )}
 
-    {data.pages > 1 && (
+    {data.pagination.pages > 1 && (
       <div className="flex items-center justify-center gap-4 mt-8">
         {Number(page) > 1 && (
           <a href={`/search?search=${search}&page=${Number(page) - 1}`} className="text-sm underline">
@@ -58,9 +58,9 @@ export default async function SearchPage({ searchParams }: Props) {
           </a>
         )}
         <span className="text-sm text-muted-foreground">
-          Page {page || 1} of {data.pages}
+          Page {page || 1} of {data.pagination.pages}
         </span>
-        {Number(page || 1) < data.pages && (
+        {Number(page || 1) < data.pagination.pages && (
           <a href={`/search?search=${search}&page=${Number(page || 1) + 1}`} className="text-sm underline">
             Next
           </a>
