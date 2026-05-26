@@ -11,25 +11,29 @@ export default function OrdersPage() {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();
   const [data, setData] = useState<OrdersResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
+  const [ordersLoading, setOrdersLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (authLoading) return;
     if (!isAuthenticated) router.push('/auth/login');
-  }, [isLoading, isAuthenticated, router]);
+  }, [authLoading, isAuthenticated, router]);
 
   useEffect(() => {
     if (!isAuthenticated) return;
 
+    setOrdersLoading(true);
+
     getMyOrders(page)
       .then(setData)
       .catch(() => setError('Failed to load orders'))
-      .finally(() => setIsLoading(false));
+      .finally(() => setOrdersLoading(false));
   }, [isAuthenticated, page]);
 
-  if (authLoading || isLoading) return (
+  if (authLoading || !isAuthenticated) return null;
+
+  if (ordersLoading) return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <p className="text-zinc-500">Loading...</p>
     </main>

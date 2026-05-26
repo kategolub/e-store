@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FooterNav from './FooterNav';
 
 export default function Footer() {
   return (
@@ -15,17 +16,7 @@ export default function Footer() {
 
           <div className="flex flex-col gap-3">
             <h3 className="font-semibold text-sm">Navigation</h3>
-            <nav className="flex flex-col gap-2">
-              <Link href="/products" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
-                Products
-              </Link>
-              <Link href="/cart" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
-                Cart
-              </Link>
-              <Link href="/orders" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
-                My Orders
-              </Link>
-            </nav>
+            <FooterNav />
           </div>
 
           <div className="flex flex-col gap-3">
