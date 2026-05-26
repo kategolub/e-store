@@ -19,7 +19,7 @@ export const getProducts = async (
       { next: { revalidate: 60, tags: ['products'] } }
     );
   } catch {
-    return { products: [], total: 0, pages: 0 };
+    return { products: [], pagination: { total: 0, pages: 0 } };
   }
 };
 
