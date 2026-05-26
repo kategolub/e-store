@@ -26,7 +26,9 @@ export interface UpdateProductDto extends Partial<CreateProductDto> {
 
 
 export interface ProductsResponse {
-  products: Product[];
-  total: number;
-  pages: number;
+  products: Product[]
+  pagination: {
+    total: number
+    pages: number
+  }
 }

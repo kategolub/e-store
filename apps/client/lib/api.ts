@@ -12,7 +12,6 @@ async function parseResponse<T>(res: Response): Promise<T> {
         message: 'Something went wrong',
         statusCode: res.status,
       }));
-
       throw error;
     }
     throw {
@@ -22,46 +21,53 @@ async function parseResponse<T>(res: Response): Promise<T> {
   }
 
   if (res.status === 204 || !isJson) return null as unknown as T;
-  return res.json();
+
+  const json = await res.json();
+
+  if (json && typeof json === 'object' && 'success' in json && 'data' in json) {
+    return json.data as T;
+  }
+
+  return json as T;
 }
 
 export async function apiFetch<T>(
   endpoint: string,
   options: RequestInit & { next?: NextFetchRequestConfig } = {}
 ): Promise<T> {
-    if (process.env.NODE_ENV === 'production' && typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
-      return null as T;
+  if (process.env.NODE_ENV === 'production' && typeof window === 'undefined' && !process.env.NEXT_PUBLIC_API_URL) {
+    return null as T;
+  }
+
+  const controller = new AbortController();
+  const timerId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const res = await fetch(`${BASE_URL}${endpoint}`, {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+      signal: options.signal || controller.signal,
+    });
+
+    return await parseResponse<T>(res);
+  } catch (error) {
+    if ((error as ApiError).statusCode !== undefined) throw error;
+    if ((error as Error).name === 'AbortError') {
+      throw {
+        message: 'Request timed out. Please try again.',
+        statusCode: 408,
+      } as ApiError;
     }
 
-    const controller = new AbortController();
-    const timerId = setTimeout(() => controller.abort(), 10000);
-
-    try {
-      const res = await fetch(`${BASE_URL}${endpoint}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
-        },
-        ...options,
-        signal: options.signal || controller.signal,
-      });
-
-      return await parseResponse<T>(res);
-    } catch (error) {
-      if ((error as ApiError).statusCode !== undefined) throw error;
-      if ((error as Error).name === 'AbortError') {
-        throw {
-          message: 'Request timed out. Please try again.',
-          statusCode: 408,
-        } as ApiError;
-      }
-
-      throw {
-        message: 'Unable to reach the server. Check your connection.',
-        statusCode: 0,
-      } as ApiError;
-    } finally {
-      clearTimeout(timerId);
-    } 
+    throw {
+      message: 'Unable to reach the server. Check your connection.',
+      statusCode: 0,
+    } as ApiError;
+  } finally {
+    clearTimeout(timerId);
+  }
 }
