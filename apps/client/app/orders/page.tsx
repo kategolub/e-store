@@ -14,11 +14,8 @@ export default function OrdersPage() {
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
   const [ordersLoading, setOrdersLoading] = useState(false);
-  
-  console.log('orders page:', { authLoading, isAuthenticated, isInitialized });
 
   useEffect(() => {
-    console.log('auth state:', { authLoading, isAuthenticated, user });
     if (authLoading) return;
     if (!isAuthenticated) router.push('/auth/login');
   }, [authLoading, isAuthenticated, router]);
