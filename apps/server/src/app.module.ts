@@ -14,7 +14,7 @@ import { OrdersModule } from './orders/orders.module';
       {
         name: 'default',
         ttl: minutes(1),
-        limit: 50,
+        limit: 100,
       },
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
