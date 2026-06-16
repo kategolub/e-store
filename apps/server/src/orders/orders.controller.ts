@@ -15,6 +15,7 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OptionalJwtGuard } from '../common/guards/optional-jwt.guard';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { SkipThrottle } from '@nestjs/throttler';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from '../auth/schemas/user.schema';
@@ -22,6 +23,7 @@ import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
+@SkipThrottle({ default: true })
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}

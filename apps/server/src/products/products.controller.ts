@@ -10,6 +10,7 @@ import {
   UseGuards,
   Req,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -20,6 +21,7 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { Role } from 'src/auth/schemas/user.schema';
 
+@SkipThrottle({ default: true })
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
