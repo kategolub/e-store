@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchBar from '../products/SearchBar';
 import { useAuth } from '../../hooks/useAuth';
@@ -13,6 +13,11 @@ export default function Header() {
   const { user, isAuthenticated, logout } = useAuth();
   const { itemsCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     await logout();

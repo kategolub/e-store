@@ -1,4 +1,3 @@
-import { revalidateTag } from 'next/cache';
 import {
     Product,
     CreateProductDto,
@@ -35,13 +34,11 @@ export const adminGetProductBySlug = async (slug: string): Promise<Product> => {
     });
 };
 
-export const adminCreateProduct = async(id: string, dto: CreateProductDto): Promise<Product> => {
+export const adminCreateProduct = async(dto: CreateProductDto): Promise<Product> => {
     const product = await apiFetch<Product>('/products', {
         method: 'POST',
         body: JSON.stringify(dto),
     });
-    revalidateTag('admin-products', 'server');
-    revalidateTag('products', 'server');
     return product;
 };
 
@@ -53,9 +50,6 @@ export const adminUpdateProduct = async (
     method: 'PATCH',
     body: JSON.stringify(dto),
   });
-  revalidateTag('admin-products', 'server');
-  revalidateTag('products', 'server');
-  revalidateTag(`admin-product-${id}`, 'server');
   return product;
 };
 
@@ -63,8 +57,4 @@ export const adminDeleteProduct = async (id: string): Promise<void> => {
     await apiFetch<void>(`/products/${id}`, {
         method: 'DELETE'
     });
-
-    revalidateTag('admin-products', 'server');
-    revalidateTag('products', 'server');
-    revalidateTag(`admin-product-${id}`, 'server');
 };

@@ -16,7 +16,7 @@ export interface CreateProductDto {
   description?: string;
   price: number;
   stock?: number;
-  images?: string;
+  images?: string[];
   isActive?: boolean;
 }
 
