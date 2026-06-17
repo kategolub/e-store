@@ -1,6 +1,5 @@
 import { Module, NestModule, MiddlewareConsumer, RequestMethod } from '@nestjs/common';
-import { minutes, ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
+import { minutes, ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProductsModule } from './products/products.module';
@@ -23,12 +22,7 @@ import { OrdersModule } from './orders/orders.module';
     AuthModule,
     OrdersModule,
   ],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
