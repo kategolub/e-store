@@ -23,7 +23,7 @@ import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 
-@SkipThrottle({ default: true })
+@SkipThrottle()
 @Controller('orders')
 export class OrdersController {
   constructor(private readonly orderService: OrdersService) {}
