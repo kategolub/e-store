@@ -3,6 +3,12 @@
 import { adminGetProducts, adminDeleteProduct } from '@/services/admin/product.service';
 import Link from 'next/link';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/@shop/shared/components/ui/tabs';
 import { Product } from '@/types/product';
 import { useState } from 'react';
 
@@ -47,7 +53,17 @@ export default function AdminProductsPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold">Manage Products</h1>
+        {/* <h1 className="text-2xl font-bold">Admin Panel</h1>
+
+        <Tabs defaultValue="products" className="w-[400px]">
+          <TabsList>
+            <TabsTrigger value="products">Products</TabsTrigger>
+            <TabsTrigger value="orders">Orders</TabsTrigger>
+          </TabsList>
+          <TabsContent value="products">Make changes to your account here.</TabsContent>
+          <TabsContent value="orders">Change your password here.</TabsContent>
+        </Tabs> */}
+
         <Link
           href="/admin/products/new"
           className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors"
@@ -60,7 +76,6 @@ export default function AdminProductsPage() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b bg-zinc-50">
-              <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">#</th>
               <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Product</th>
               <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Price</th>
               <th className="px-6 py-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Stock</th>
@@ -77,7 +92,6 @@ export default function AdminProductsPage() {
             ) : (
               data.products.map((product: Product, idx: number) => (
                 <tr key={product._id} className="hover:bg-zinc-50 transition-colors">
-                  <td className="px-6 py-4 text-sm text-zinc-500 font-medium">{(page - 1) * limit + idx + 1}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       {product.images?.[0] && (

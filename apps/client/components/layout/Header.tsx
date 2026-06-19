@@ -104,7 +104,7 @@ export default function Header() {
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-              {itemsCount > 0 && (
+              {isMounted && itemsCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-zinc-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {itemsCount}
                 </span>

@@ -56,12 +56,6 @@ export default function AdminLayout({
               </Link>
             </nav>
           </div>
-          <Link
-            href="/"
-            className="text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors"
-          >
-            Back to Store
-          </Link>
         </div>
       </div>
       <main className="flex-1">

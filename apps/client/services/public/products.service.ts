@@ -4,7 +4,7 @@ import { Product, ProductsResponse } from "../../types/product";
 
 export const getProducts = async (
   page = 1,
-  limit = 12,
+  limit = 10,
   search = ''
 ): Promise<ProductsResponse> => {
   try {

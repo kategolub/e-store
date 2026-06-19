@@ -11,7 +11,7 @@ interface Props {
 
 export default function ProductCard({ product }: Props) {
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col hover:scale-105 transition-transform duration-300 random2 px-4">
       <Link href={`/products/${product.slug}`}>
         <div className="relative w-full aspect-square bg-zinc-100 rounded-t-lg overflow-hidden">
             {product.images[0] ? (
@@ -19,7 +19,7 @@ export default function ProductCard({ product }: Props) {
                   src={product.images[0]}
                   alt={product.name}
                   fill
-                  className="object-cover hover:scale-105 transition-transform duration-300"
+                  className="object-cover"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
             ) : (

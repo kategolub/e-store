@@ -9,13 +9,14 @@ import { OrdersModule } from './orders/orders.module';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot([
-      {
-        name: 'default',
-        ttl: minutes(1),
-        limit: 100,
-      },
-    ]),
+    // Commenting ThrottlerModule since on Render free tier this blocks app from loading
+    // ThrottlerModule.forRoot([
+    //   {
+    //     name: 'default',
+    //     ttl: minutes(1),
+    //     limit: 100,
+    //   },
+    // ]),
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.MONGO_URI as string),
     ProductsModule,
