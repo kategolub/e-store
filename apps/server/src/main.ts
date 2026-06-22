@@ -6,10 +6,15 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { PaginationMetadataInterceptor } from './common/interceptors/paginationMetadata.interceptor';
+import type { Application } from 'express';
 
 async function bootstrap() {
   mongoose.set('autoIndex', true);
   const app = await NestFactory.create(AppModule);
+
+  const expressInstance = app.getHttpAdapter().getInstance() as Application;
+  expressInstance.set('trust proxy', 1);
+
   app.use(helmet());
   app.use(cookieParser());
   app.setGlobalPrefix('api');
