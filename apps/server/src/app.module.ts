@@ -10,13 +10,13 @@ import { OrdersModule } from './orders/orders.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ThrottlerModule.forRoot([
-      {
-        name: 'default',
-        ttl: 60000,
-        limit: 300,
-      },
-    ]),
+    // ThrottlerModule.forRoot([
+    //   {
+    //     name: 'default',
+    //     ttl: 60000,
+    //     limit: 300,
+    //   },
+    // ]),
     // MongooseModule.forRoot(process.env.MONGO_URI as string),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,7 +29,6 @@ import { OrdersModule } from './orders/orders.module';
     AuthModule,
     OrdersModule,
   ],
-  providers: [],
 })
 
 export class AppModule implements NestModule {

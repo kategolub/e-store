@@ -9,7 +9,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis
 } from '@/@shop/shared/components/ui/pagination';
-import { getProducts } from '../../services/public/products.service';
+import { getProducts } from '@/services/public/products.service';
 import ProductCard from '@/components/products/ProductCard';
 
 export const metadata = {

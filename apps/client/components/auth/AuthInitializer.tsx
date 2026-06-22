@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useAppDispatch } from '../../lib/store/hooks';
-import { setUser, clearUser } from '../../lib/store/slices/authSlice';
-import { getMe } from '../../services/public/auth.service';
+import { useAppDispatch } from '@/lib/store/hooks';
+import { setUser, clearUser } from '@/lib/store/slices/authSlice';
+import { getMe } from '@/services/public/auth.service';
 
 export default function AuthInitializer() {
   const dispatch = useAppDispatch();
