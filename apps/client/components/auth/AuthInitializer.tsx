@@ -11,7 +11,18 @@ export default function AuthInitializer() {
 
   const { data, isSuccess, isError } = useQuery({
     queryKey: ['me'],
-    queryFn: getMe,
+    queryFn: async () => {
+      try {
+        const data = await getMe();
+        if (data?.user) {
+          dispatch(setUser(data.user));
+        }
+        return data;
+      } catch (error) {
+        dispatch(clearUser());
+        throw error;
+      }
+    },
     retry: false,
     staleTime: 1000 * 60 * 5,
   });
