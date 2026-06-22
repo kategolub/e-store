@@ -24,7 +24,6 @@ export interface UpdateProductDto extends Partial<CreateProductDto> {
   slug?: string;
 }
 
-
 export interface ProductsResponse {
   products: Product[]
   pagination: {

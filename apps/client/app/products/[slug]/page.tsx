@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Image from "next/image";
 import { notFound } from 'next/navigation';
 import { getProductBySlug } from "@/services/public/products.service";
@@ -6,8 +8,6 @@ import AddToCartButton from "@/components/products/AddToCartButton";
 interface Props {
   params: Promise<{ slug: string }>
 }
-
-export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;

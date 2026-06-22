@@ -41,7 +41,7 @@ export default function Header() {
               </svg>
             </button>
 
-            <Link href="/" className="font-bold text-xl">
+            <Link href="/" className="font-bold text-2xl">
               MegaShop
             </Link>
           </div>
@@ -51,7 +51,7 @@ export default function Header() {
               <input
                 disabled
                 placeholder="Search products..."
-                className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-sm opacity-50"
+                className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-md opacity-50"
               />
             }>
               <SearchBar />
@@ -60,34 +60,33 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             <nav className="hidden lg:flex items-center gap-4">
-              <Link href="/products" className="text-sm font-medium hover:underline">
+              <Link href="/products" className="text-md font-medium hover:underline">
                 Products
               </Link>
 
               {isAuthenticated ? (
                 <>
-                  <span className="text-sm text-zinc-500">{user?.name}</span>
-                  <Link href="/orders" className="text-sm font-medium hover:underline">
+                  {/* <Link href="/orders" className="text-md font-medium hover:underline">
                     My Orders
-                  </Link>
+                  </Link> */}
                   {user?.role === 'admin' && (
-                    <Link href="/admin" className="text-sm font-medium hover:underline">
+                    <Link href="/admin" className="text-md font-medium hover:underline">
                       Admin
                     </Link>
                   )}
                   <button
                     onClick={handleLogout}
-                    className="text-sm font-medium hover:underline"
+                    className="text-md font-medium hover:underline"
                   >
                     Logout
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/auth/login" className="text-sm font-medium hover:underline">
+                  <Link href="/auth/login" className="text-md font-medium hover:underline">
                     Login
                   </Link>
-                  <Link href="/auth/register" className="text-sm font-medium hover:underline">
+                  <Link href="/auth/register" className="text-md font-medium hover:underline">
                     Register
                   </Link>
                 </>
@@ -118,7 +117,7 @@ export default function Header() {
             <input
               disabled
               placeholder="Search products..."
-              className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-sm opacity-50"
+              className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-md opacity-50"
             />
           }>
             <SearchBar />

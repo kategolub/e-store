@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import {
   Pagination,
   PaginationContent,
@@ -14,8 +16,6 @@ export const metadata = {
   title: 'MegaShop | Products',
   description: 'Browse our product catalog',
 };
-
-export const dynamic = 'force-dynamic';
 
 export default async function ProductsPage({ searchParams }: {searchParams: Promise<{ [key: string]: string }>}) {
   const searchPage = (await searchParams).page;

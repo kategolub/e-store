@@ -1,64 +1,61 @@
 'use client';
 
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { Tabs, TabsList, TabsTrigger } from '@/@shop/shared/components/ui/tabs';
 
-export default function AdminLayout({
+export default function AdminDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isInitialized, isAuthenticated } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    if (isInitialized) {
-      if (!isAuthenticated || user?.role !== 'admin') {
-        router.push('/');
-      }
-    }
-  }, [isInitialized, isAuthenticated, user, router]);
+  const activeTab = pathname.includes('/admin/orders') ? 'orders' : 'products';
 
-  if (!isInitialized) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-900"></div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated || user?.role !== 'admin') {
-    return null; // Will redirect via useEffect
-  }
+  const handleTabChange = (value: string) => {
+    router.push(`/admin/${value}`);
+  };
 
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-50">
-      <div className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between">
-          <div className="flex items-center gap-8">
-            <span className="font-bold text-sm uppercase tracking-wider text-zinc-500">
-              Admin Panel
-            </span>
-            <nav className="flex items-center gap-4">
-              <Link
-                href="/admin/products"
-                className="text-sm font-medium hover:text-zinc-900 text-zinc-600 transition-colors"
-              >
-                Products
-              </Link>
-              <Link
-                href="/admin/orders"
-                className="text-sm font-medium hover:text-zinc-900 text-zinc-600 transition-colors"
-              >
-                Orders
-              </Link>
-            </nav>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-4">
+        <div className="flex flex-col">
+          <div className="mb-4">
+            <h1 className="text-xl font-bold tracking-tight text-zinc-900">Admin Panel</h1>
           </div>
+          
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-auto">
+            <TabsList className="bg-zinc-100 p-1 rounded-xl">
+              <TabsTrigger value="products" className="px-4 py-2 rounded-lg text-md font-semibold transition-all">
+                Products
+              </TabsTrigger>
+              <TabsTrigger value="orders" className="px-4 py-2 rounded-lg text-md font-semibold transition-all">
+                Orders
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
+        {activeTab === 'products' ? (
+          <Link
+          href="/admin/products/new"
+          className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-md font-medium hover:bg-zinc-800 transition-colors"
+        >
+          Add Product
+        </Link>
+        ) : (
+          <Link
+          href="/admin/orders/new"
+          className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-md font-medium hover:bg-zinc-800 transition-colors"
+          onClick={(e) => { e.preventDefault(); /* Disabling button while preparing add new order functionality */}}
+        >
+          Create Order
+        </Link>
+        )}
       </div>
-      <main className="flex-1">
+
+      <main>
         {children}
       </main>
     </div>

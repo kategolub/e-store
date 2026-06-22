@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { getProducts } from '../services/public/products.service';
 import ProductCard from '../components/products/ProductCard';
@@ -7,8 +9,6 @@ export const metadata = {
   title: 'MegaShop — Premium Clothing Store',
   description: 'Shop the latest trends in clothing and accessories',
 };
-
-export const dynamic = 'force-dynamic';
 
 export default async function HomePage() {
   const data = await getProducts(1, 8);

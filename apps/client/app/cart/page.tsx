@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useCart } from '@/hooks/useCart';
 import CartItem from '@/components/cart/CartItem';
 import Link from 'next/link';
