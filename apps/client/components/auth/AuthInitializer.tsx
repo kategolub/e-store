@@ -9,7 +9,7 @@ import { getMe } from '../../services/public/auth.service';
 export default function AuthInitializer() {
   const dispatch = useAppDispatch();
 
-  const { data, isSuccess, isError } = useQuery({
+  useQuery({
     queryKey: ['me'],
     queryFn: async () => {
       try {
@@ -26,11 +26,6 @@ export default function AuthInitializer() {
     retry: false,
     staleTime: 1000 * 60 * 5,
   });
-
-  useEffect(() => {
-    if (isSuccess && data) dispatch(setUser(data.user));
-    if (isError) dispatch(clearUser());
-  }, [isSuccess, isError, data, dispatch]);
 
   return null;
 }
