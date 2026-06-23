@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDebounce } from './useDebounce';
-import { apiFetch } from '../lib/api';
-import { Product, ProductsResponse } from '../types/product';
+import { getProducts } from '../services/public/products.service';
+import { Product } from '../types/product';
 
 export const useSearch = () => {
   const [value, setValue] = useState('');
@@ -19,7 +19,7 @@ export const useSearch = () => {
     const fetchResults = async () => {
       setIsLoading(true);
       try {
-        const data = await apiFetch<ProductsResponse>(`/products?search=${debouncedValue}&limit=5`);
+        const data = await getProducts(1, 5, debouncedValue);
         setResults(data.products || []);
       } catch {
         setResults([]);

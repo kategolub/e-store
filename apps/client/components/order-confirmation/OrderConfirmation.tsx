@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { apiFetch } from '@/lib/api';
+import { getOrderById } from '@/services/public/orders.service';
 import { Order } from '@/types/order';
 
 interface Props {
@@ -16,17 +16,9 @@ export default function OrderConfirmation({ id, email }: Props) {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const url = email
-        ? `/orders/${id}?email=${encodeURIComponent(email)}`
-        : `/orders/${id}`;
-
-        apiFetch<Order>(url)
-            .then(data => {
-                setOrder(data);
-            })
-            .catch(() => {
-                setError('Could not load order');
-            })
+        getOrderById(id, email || undefined)
+            .then(data => setOrder(data))
+            .catch(() => setError('Could not load order'))
             .finally(() => setIsLoading(false));
     }, [id, email]);
 

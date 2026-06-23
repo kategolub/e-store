@@ -9,19 +9,12 @@ import {
   adminDeleteProduct,
 } from '@/services/admin/product.service';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/@shop/shared/components/ui/tabs';
 import { Product } from '@/types/product';
 import EditProductModal from '../../../components/admin/EditProductModal';
 
 export default function AdminProductsPage() {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const [products, setProducts] = useState<Product[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +32,7 @@ export default function AdminProductsPage() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
     },
-    onError: (error: any) => {
+    onError: (error: Error & { message?: string }) => {
       alert(error.message || 'Failed to delete product');
     }
   });
@@ -100,7 +93,7 @@ export default function AdminProductsPage() {
                 </td>
               </tr>
             ) : (
-              data.products.map((product: Product, idx: number) => (
+              data.products.map((product: Product) => (
                 <tr key={product._id} className="hover:bg-zinc-50 transition-colors">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">

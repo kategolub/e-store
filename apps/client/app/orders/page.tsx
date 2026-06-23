@@ -5,40 +5,29 @@ export const dynamic = 'force-dynamic';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../hooks/useAuth';
 import { getMyOrders } from '../../services/public/orders.service';
-import { Order, OrdersResponse } from '../../types/order';
+import { Order } from '../../types/order';
+import { getOrderStatusClass } from '../../lib/utils';
 
 export default function OrdersPage() {
-  const { isAuthenticated, isLoading: authLoading, user, isInitialized } = useAuth();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
   const router = useRouter();
-  const [data, setData] = useState<OrdersResponse | null>(null);
-  const [error, setError] = useState('');
   const [page, setPage] = useState(1);
-  const [ordersLoading, setOrdersLoading] = useState(false);
 
   useEffect(() => {
-    if (authLoading) return;
-    if (!isAuthenticated) router.push('/auth/login');
+    if (!authLoading && !isAuthenticated) router.push('/auth/login');
   }, [authLoading, isAuthenticated, router]);
 
-  useEffect(() => {
-    if (authLoading) return;
-    if (!isAuthenticated && !user) router.push('/auth/login');
-  }, [authLoading, isAuthenticated, user]);
+  const { data, isLoading: ordersLoading, error } = useQuery({
+    queryKey: ['my-orders', page],
+    queryFn: () => getMyOrders(page),
+    enabled: isAuthenticated,
+    retry: false,
+  });
 
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    setOrdersLoading(true);
-
-    getMyOrders(page)
-      .then(setData)
-      .catch(() => setError('Failed to load orders'))
-      .finally(() => setOrdersLoading(false));
-  }, [isAuthenticated, page]);
-
-  if (authLoading || (!isAuthenticated && !user)) return null;
+  if (authLoading || (!isAuthenticated)) return null;
 
   if (ordersLoading) return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -48,7 +37,7 @@ export default function OrdersPage() {
 
   if (error) return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <p className="text-red-500">{error}</p>
+      <p className="text-red-500">Failed to load orders</p>
     </main>
   );
 
@@ -77,12 +66,7 @@ export default function OrdersPage() {
                 </div>
                 <div className="flex flex-col gap-1 text-right">
                   <p className="text-sm text-zinc-500">Status</p>
-                  <span className={`text-sm font-medium capitalize ${
-                    order.status === 'delivered' ? 'text-green-600' :
-                    order.status === 'shipped' ? 'text-blue-600' :
-                    order.status === 'processing' ? 'text-yellow-600' :
-                    'text-zinc-600'
-                  }`}>
+                  <span className={`text-sm font-medium capitalize ${getOrderStatusClass(order.status)}`}>
                     {order.status}
                   </span>
                 </div>

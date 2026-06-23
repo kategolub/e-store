@@ -6,11 +6,10 @@ import { useCart } from '@/hooks/useCart';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { apiFetch } from '@/lib/api';
+import { createOrder } from '@/services/public/orders.service';
 import { Order, OrderPayload } from '@/types/order';
 
 export default function CheckoutPage() {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [form, setForm] = useState({
     name: '',
@@ -24,23 +23,18 @@ export default function CheckoutPage() {
   const { total, items, handleClearCart } = useCart();
   const router = useRouter();
 
-  const { mutate } = useMutation({
-    mutationFn: (payload: OrderPayload) => 
-        apiFetch<Order>('/orders', {
-            method: 'POST',
-            body: JSON.stringify(payload)
-        }),
-        onSuccess: (order: Order) => {
-            const emailParam = form.email ? `?email=${encodeURIComponent(form.email)}` : '';
-            router.push(`/order-confirmation/${order._id}${emailParam}`);
-            handleClearCart();
-        }
+  const { mutate, isPending } = useMutation({
+    mutationFn: (payload: OrderPayload) => createOrder(payload),
+    onSuccess: (order: Order) => {
+      const emailParam = form.email ? `?email=${encodeURIComponent(form.email)}` : '';
+      router.push(`/order-confirmation/${order._id}${emailParam}`);
+      handleClearCart();
+    },
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError('');
-    setIsLoading(true);
 
     const payload = {
         items: items.map(item => ({
@@ -185,9 +179,10 @@ export default function CheckoutPage() {
 
             <button
               type="submit"
-              className="w-full bg-zinc-900 text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors"
+              disabled={isPending}
+              className="w-full bg-zinc-900 text-white rounded-lg py-3 text-sm font-medium hover:bg-zinc-700 transition-colors disabled:opacity-50"
             >
-              Place Order
+              {isPending ? 'Placing Order...' : 'Place Order'}
             </button>
 
           </form>

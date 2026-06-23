@@ -30,7 +30,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
       queryClient.invalidateQueries({ queryKey: ['admin-products'] });
       onClose();
     },
-    onError: (error: any) => {
+    onError: (error: Error & { message?: string }) => {
       alert(error.message || 'Failed to update product');
     }
   });
