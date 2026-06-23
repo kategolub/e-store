@@ -11,6 +11,13 @@ import {
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product } from '@/types/product';
 import EditProductModal from '../../../components/admin/EditProductModal';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/@shop/shared/components/ui/pagination';
+import { Button } from '@/@shop/shared/components/ui/button';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 export default function AdminProductsPage() {
   const queryClient = useQueryClient();
@@ -171,39 +178,46 @@ export default function AdminProductsPage() {
         </table>
       </div>
       
-      <div className="mt-4 flex flex-col items-center gap-4">
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setPage(p => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="px-3 py-1 border rounded-lg text-sm font-medium hover:bg-zinc-50 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
-          >
-            Previous
-          </button>
-          <div className="flex items-center gap-1">
-            {[...Array(totalPages)].map((_, i) => (
-              <button
-                key={i + 1}
+      <Pagination className="mt-4">
+        <PaginationContent>
+          <PaginationItem>
+            <Button
+              variant="ghost"
+              size="default"
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="gap-1 pl-2.5"
+            >
+              <ChevronLeftIcon className="size-4" />
+              <span className="hidden sm:block">Previous</span>
+            </Button>
+          </PaginationItem>
+          {[...Array(totalPages)].map((_, i) => (
+            <PaginationItem key={i + 1}>
+              <Button
+                variant={page === i + 1 ? "outline" : "ghost"}
+                size="icon"
                 onClick={() => setPage(i + 1)}
-                className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
-                  page === i + 1
-                    ? 'bg-zinc-900 text-white'
-                    : 'hover:bg-zinc-100 text-zinc-600'
-                }`}
+                aria-current={page === i + 1 ? "page" : undefined}
               >
                 {i + 1}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-            disabled={page === totalPages}
-            className="px-3 py-1 border rounded-lg text-sm font-medium hover:bg-zinc-50 disabled:opacity-50 disabled:hover:bg-transparent transition-colors"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+              </Button>
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <Button
+              variant="ghost"
+              size="default"
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="gap-1 pr-2.5"
+            >
+              <span className="hidden sm:block">Next</span>
+              <ChevronRightIcon className="size-4" />
+            </Button>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
       {selectedProduct && (
         <EditProductModal
           key={selectedProduct._id}

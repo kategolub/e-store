@@ -1,6 +1,13 @@
 import { redirect } from 'next/navigation';
 import { getProducts } from '../../services/public/products.service';
 import ProductCard from '../../components/products/ProductCard';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from '@/@shop/shared/components/ui/pagination';
 
 interface Props {
   searchParams: Promise<{ search?: string; page?: string }>
@@ -51,21 +58,27 @@ export default async function SearchPage({ searchParams }: Props) {
     )}
 
     {data.pagination.pages > 1 && (
-      <div className="flex items-center justify-center gap-4 mt-8">
-        {Number(page) > 1 && (
-          <a href={`/search?search=${search}&page=${Number(page) - 1}`} className="text-sm underline">
-            Previous
-          </a>
-        )}
-        <span className="text-sm text-muted-foreground">
-          Page {page || 1} of {data.pagination.pages}
-        </span>
-        {Number(page || 1) < data.pagination.pages && (
-          <a href={`/search?search=${search}&page=${Number(page || 1) + 1}`} className="text-sm underline">
-            Next
-          </a>
-        )}
-      </div>
+      <Pagination className="mt-8">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href={`/search?search=${search}&page=${Number(page || 1) - 1}`}
+              className={Number(page || 1) <= 1 ? "pointer-events-none opacity-50" : ""}
+            />
+          </PaginationItem>
+          <PaginationItem>
+            <span className="text-sm text-muted-foreground px-2">
+              Page {page || 1} of {data.pagination.pages}
+            </span>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              href={`/search?search=${search}&page=${Number(page || 1) + 1}`}
+              className={Number(page || 1) >= data.pagination.pages ? "pointer-events-none opacity-50" : ""}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     )}
   </main>
   );

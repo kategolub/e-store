@@ -10,6 +10,13 @@ import { useAuth } from '../../hooks/useAuth';
 import { getMyOrders } from '../../services/public/orders.service';
 import { Order } from '../../types/order';
 import { getOrderStatusClass } from '../../lib/utils';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/@shop/shared/components/ui/pagination';
+import { Button } from '@/@shop/shared/components/ui/button';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 
 export default function OrdersPage() {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
@@ -98,25 +105,39 @@ export default function OrdersPage() {
           ))}
 
           {data.pagination.pages > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-4">
-              <button
-                onClick={() => setPage(p => p - 1)}
-                disabled={page === 1}
-                className="text-sm underline disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <span className="text-sm text-zinc-500">
-                Page {page} of {data.pagination.pages}
-              </span>
-              <button
-                onClick={() => setPage(p => p + 1)}
-                disabled={page === data.pagination.pages}
-                className="text-sm underline disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
+            <Pagination className="mt-4">
+              <PaginationContent>
+                <PaginationItem>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    onClick={() => setPage(p => p - 1)}
+                    disabled={page === 1}
+                    className="gap-1 pl-2.5"
+                  >
+                    <ChevronLeftIcon className="size-4" />
+                    <span className="hidden sm:block">Previous</span>
+                  </Button>
+                </PaginationItem>
+                <PaginationItem>
+                  <span className="text-sm text-muted-foreground px-2">
+                    Page {page} of {data.pagination.pages}
+                  </span>
+                </PaginationItem>
+                <PaginationItem>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    onClick={() => setPage(p => p + 1)}
+                    disabled={page === data.pagination.pages}
+                    className="gap-1 pr-2.5"
+                  >
+                    <span className="hidden sm:block">Next</span>
+                    <ChevronRightIcon className="size-4" />
+                  </Button>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           )}
         </div>
       )}
