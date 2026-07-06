@@ -13,7 +13,7 @@ export default function SearchBar() {
     const [isPending, startTransition] = useTransition();
 
     useEffect(() => {
-        if (value.trim()) {
+        if (value.trim().length >= 2) {
             setIsOpen(true);
         } else {
             setIsOpen(false);
