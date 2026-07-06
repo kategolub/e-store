@@ -11,7 +11,7 @@ export const useSearch = () => {
   const debouncedValue = useDebounce(value, 300);
 
   useEffect(() => {
-    if (!debouncedValue.trim()) {
+    if (debouncedValue.trim().length < 2) {
       setResults([]);
       return;
     }

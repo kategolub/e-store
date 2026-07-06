@@ -31,7 +31,7 @@ export default function SearchBar() {
     }, []);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter' && value.trim()) {
+        if (event.key === 'Enter' && value.trim().length >= 2) {
           setIsOpen(false);
           startTransition(() => {
             router.push(`/search?search=${encodeURIComponent(value)}`);
@@ -64,11 +64,11 @@ export default function SearchBar() {
                 onKeyDown={handleKeyDown}
                 onFocus={() => results.length > 0 && setIsOpen(true)}
                 placeholder="Search products..."
-                className={`w-full border border-zinc-200 rounded-lg px-4 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`}
+                className={`w-full h-10 border border-zinc-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`}
             />
 
             {isLoading && (
-                <span className="absolute right-3 top-2.5 text-zinc-400 text-xs">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 text-sm">
                   Searching...
                 </span>
             )}
