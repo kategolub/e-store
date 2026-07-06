@@ -28,13 +28,19 @@ export class ProductsService {
     const skip = (page - 1) * limit;
 
     const filters: Record<string, any> = { isActive: true };
+    const search = query.search?.trim();
 
-    if (query.search) {
-      filters.$or = [{ name: { $regex: query.search, $options: 'i' } }];
+    if (search) {
+      filters.$text = { $search: search };
     }
 
+    const projection = search ? { score: { $meta: 'textScore' } } : undefined;
+    const sort: Record<string, any> = search
+      ? { score: { $meta: 'textScore' } }
+      : { createdAt: -1 };
+
     const [products, total] = await Promise.all([
-      this.productModel.find(filters).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      this.productModel.find(filters, projection).skip(skip).limit(limit).sort(sort),
       this.productModel.countDocuments(filters),
     ]);
 

@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSearch } from '../../hooks/useSearch';
+import { Input } from "@/@shop/shared/components/ui/input";
 import Link from 'next/link';
 
 export default function SearchBar() {
@@ -33,7 +34,7 @@ export default function SearchBar() {
         if (event.key === 'Enter' && value.trim()) {
           setIsOpen(false);
           startTransition(() => {
-            router.push(`/products?search=${encodeURIComponent(value)}`);
+            router.push(`/search?search=${encodeURIComponent(value)}`);
           });
         }
 
@@ -45,7 +46,7 @@ export default function SearchBar() {
     const handleSeeAll = () => {
         setIsOpen(false);
         startTransition(() => {
-            router.push(`/products?search=${encodeURIComponent(value)}`);
+            router.push(`/search?search=${encodeURIComponent(value)}`);
         });
     };
 
@@ -56,7 +57,7 @@ export default function SearchBar() {
 
     return (
         <div ref={containerRef} className="relative w-full">
-            <input
+            <Input
                 type="text"
                 value={value}
                 onChange={e => setValue(e.target.value)}
@@ -76,7 +77,7 @@ export default function SearchBar() {
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-zinc-200 rounded-lg shadow-lg z-50 overflow-hidden">
                     {results.length === 0 ? (
                         <p className="px-4 py-3 text-sm text-zinc-400">
-                            No results for "{value}"
+                            No results for &quot;{value}&quot;
                         </p>
                     ) : (
                         <>
@@ -105,7 +106,7 @@ export default function SearchBar() {
                                 onClick={handleSeeAll}
                                 className="w-full px-1 py-3 text-sm font-medium text-center border-t border-zinc-100 hover:bg-zinc-50 transition-colors hover:cursor-pointer"
                             >
-                                See all results for "{value}"
+                                See all results for &quot;{value}&quot;
                             </button>
                         </>
                     )}

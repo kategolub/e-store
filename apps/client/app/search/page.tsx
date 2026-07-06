@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
 export async function generateMetadata({ searchParams }: Props) {
   const { search } = await searchParams;
   return {
-    title: search ? `"${search}" — Search results | Shop` : 'Search | Shop',
+    title: search ? `Search - ${search}` : 'Search | Shop',
   };
 }
 
@@ -35,7 +35,7 @@ export default async function SearchPage({ searchParams }: Props) {
   <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div className="mb-8">
       <h1 className="text-3xl font-bold">
-        Results for "{search}"
+        Search results for &quot;{search}&quot;
       </h1>
       <p className="text-muted-foreground mt-1">
         {data.pagination.total} product{data.pagination.total !== 1 ? 's' : ''} found
