@@ -16,11 +16,9 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<CartItem>) => {
       const existing = state.items.find(item => item.id === action.payload.id);
       if (existing) {
-        if (existing.quantity < existing.stock) {
-          existing.quantity += 1;
-        }
+        existing.quantity = Math.min(existing.quantity + action.payload.quantity, existing.stock);
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({ ...action.payload, quantity: Math.min(action.payload.quantity, action.payload.stock) });
       }
     },
 

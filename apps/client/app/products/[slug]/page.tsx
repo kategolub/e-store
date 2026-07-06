@@ -72,7 +72,7 @@ export default async function ProductPage({ params }: Props) {
             </div>
           )}
 
-          <AddToCartButton product={product} />
+          <AddToCartButton product={product} showQuantitySelector />
         </div>
       </div>
     </main>

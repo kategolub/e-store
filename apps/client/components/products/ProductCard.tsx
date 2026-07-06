@@ -42,7 +42,7 @@ export default function ProductCard({ product }: Props) {
       </CardContent>
 
       <CardFooter>
-        <AddToCartButton product={product}/>
+        <AddToCartButton product={product} showQuantitySelector/>
       </CardFooter>
     </Card>
   );
