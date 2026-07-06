@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Product } from '@/types/product';
 import { adminUpdateProduct } from '@/services/admin/product.service';
 import { UpdateProductDto } from '@/types/product';
+import { Input } from '@/@shop/shared/components/ui/input';
 
 interface EditProductModalProps {
   product: Product | null;
@@ -65,7 +66,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Product Name</label>
-            <input
+            <Input
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
@@ -76,7 +77,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
 
           <div>
             <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Product Description</label>
-            <input
+            <Input
               type="text"
               value={formData.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
@@ -87,7 +88,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
 
           <div>
             <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Image Link</label>
-            <input
+            <Input
               type="text"
               value={formData.images}
               onChange={(e) => handleInputChange('images', e.target.value)}
@@ -98,7 +99,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Price ($)</label>
-              <input
+              <Input
                 type="number"
                 step="0.01"
                 value={formData.price}
@@ -109,7 +110,7 @@ export default function EditProductModal({ product, isOpen, onClose }: EditProdu
             </div>
             <div>
               <label className="block text-xs font-medium text-zinc-500 uppercase tracking-wider mb-1">Stock</label>
-              <input
+              <Input
                 type="number"
                 value={formData.stock}
                 onChange={(e) => handleInputChange('stock', Number(e.target.value))}

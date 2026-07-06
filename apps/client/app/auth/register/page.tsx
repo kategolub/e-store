@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '../../../hooks/useAuth';
+import { Input } from '@/@shop/shared/components/ui/input';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function RegisterPage() {
           <label htmlFor="name" className="text-sm font-medium">
             Name
           </label>
-          <input
+          <Input
             id="name"
             name="name"
             type="text"
@@ -60,7 +61,7 @@ export default function RegisterPage() {
           <label htmlFor="email" className="text-sm font-medium">
             Email
           </label>
-          <input
+          <Input
             id="email"
             name="email"
             type="email"
@@ -73,7 +74,7 @@ export default function RegisterPage() {
           <label htmlFor="password" className="text-sm font-medium">
             Password
           </label>
-          <input
+          <Input
             id="password"
             name="password"
             type="password"

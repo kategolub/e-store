@@ -7,6 +7,7 @@ import SearchBar from '../products/SearchBar';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import MobileMenu from './MobileMenu';
+import { Input } from '@/@shop/shared/components/ui/input';
 
 export default function Header() {
   const router = useRouter();
@@ -48,7 +49,7 @@ export default function Header() {
 
           <div className="flex-1 max-w-md hidden sm:block">
             <Suspense fallback={
-              <input
+              <Input
                 disabled
                 placeholder="Search products..."
                 className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-md opacity-50"
@@ -114,7 +115,7 @@ export default function Header() {
 
         <div className="sm:hidden px-4 pb-3">
           <Suspense fallback={
-            <input
+            <Input
               disabled
               placeholder="Search products..."
               className="w-full border border-zinc-200 rounded-lg px-4 py-2 text-md opacity-50"

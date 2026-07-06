@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { createOrder } from '@/services/public/orders.service';
 import { Order, OrderPayload } from '@/types/order';
+import { Input } from '@/@shop/shared/components/ui/input';
 
 export default function CheckoutPage() {
   const [error, setError] = useState('');
@@ -78,7 +79,7 @@ export default function CheckoutPage() {
                 <label htmlFor="name" className="text-sm font-medium">
                   Full Name
                 </label>
-                <input
+                <Input
                   id="name"
                   type="text"
                   name="name"
@@ -94,7 +95,7 @@ export default function CheckoutPage() {
                 <label htmlFor="email" className="text-sm font-medium">
                   Email
                 </label>
-                <input
+                <Input
                   id="email"
                   type="email"
                   name="email"
@@ -110,7 +111,7 @@ export default function CheckoutPage() {
                 <label htmlFor="phone" className="text-sm font-medium">
                   Phone
                 </label>
-                <input
+                <Input
                   id="phone"
                   type="tel"
                   name="phone"
@@ -130,7 +131,7 @@ export default function CheckoutPage() {
                 <label htmlFor="address" className="text-sm font-medium">
                   Address
                 </label>
-                <input
+                <Input
                   id="address"
                   type="text"
                   name="address"
@@ -147,7 +148,7 @@ export default function CheckoutPage() {
                   <label htmlFor="city" className="text-sm font-medium">
                     City
                   </label>
-                  <input
+                  <Input
                     id="city"
                     type="text"
                     name="city"
@@ -163,7 +164,7 @@ export default function CheckoutPage() {
                   <label htmlFor="zip" className="text-sm font-medium">
                     ZIP Code
                   </label>
-                  <input
+                  <Input
                     id="zip"
                     type="text"
                     name="zip"

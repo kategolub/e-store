@@ -64,7 +64,7 @@ export default function SearchBar() {
                 onKeyDown={handleKeyDown}
                 onFocus={() => results.length > 0 && setIsOpen(true)}
                 placeholder="Search products..."
-                className={`w-full border border-zinc-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`}
+                className={`w-full border border-zinc-200 rounded-lg px-4 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 transition-opacity ${isPending ? 'opacity-50' : 'opacity-100'}`}
             />
 
             {isLoading && (

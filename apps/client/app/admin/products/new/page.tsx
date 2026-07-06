@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { adminCreateProduct } from '@/services/admin/product.service';
 import Link from 'next/link';
+import { Input } from '@/@shop/shared/components/ui/input';
 
 export default function NewProductPage() {
   const router = useRouter();
@@ -81,7 +82,7 @@ export default function NewProductPage() {
         <div className="bg-white border rounded-xl p-6 shadow-sm space-y-4">
           <div className="flex flex-col gap-1">
             <label htmlFor="name" className="text-sm font-medium">Product Name</label>
-            <input
+            <Input
               id="name"
               name="name"
               type="text"
@@ -105,7 +106,7 @@ export default function NewProductPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
               <label htmlFor="price" className="text-sm font-medium">Price ($)</label>
-              <input
+              <Input
                 id="price"
                 name="price"
                 type="number"
@@ -118,7 +119,7 @@ export default function NewProductPage() {
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="stock" className="text-sm font-medium">Stock Quantity</label>
-              <input
+              <Input
                 id="stock"
                 name="stock"
                 type="number"
@@ -135,7 +136,7 @@ export default function NewProductPage() {
           <div className="space-y-3">
             {images.map((url, index) => (
               <div key={index} className="flex gap-2">
-                <input
+                <Input
                   type="url"
                   value={url}
                   onChange={(e) => handleImageChange(index, e.target.value)}
