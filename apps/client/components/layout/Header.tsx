@@ -43,7 +43,7 @@ export default function Header() {
             </button>
 
             <Link href="/" className="font-bold text-2xl">
-              MegaShop
+              MEGASHOP
             </Link>
           </div>
 

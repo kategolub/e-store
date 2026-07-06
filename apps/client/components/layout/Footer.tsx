@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
 
           <div className="flex flex-col gap-3">
-            <h3 className="font-bold text-lg">MegaShop</h3>
+            <h3 className="font-bold text-lg">MEGASHOP</h3>
             <p className="text-sm text-zinc-500">
               Premium clothing and accessories for every occasion.
             </p>
@@ -25,7 +25,7 @@ export default function Footer() {
 
         <div className="border-t mt-8 pt-8 text-center">
           <p className="text-sm text-zinc-500">
-            © {new Date().getFullYear()} MegaShop. All rights reserved.
+            © {new Date().getFullYear()} MEGASHOP. All rights reserved.
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ import ProductCard from '../components/products/ProductCard';
 import { Product } from '@/types/product';
 
 export const metadata = {
-  title: 'MegaShop — Premium Clothing Store',
+  title: 'MEGASHOP — Premium Clothing Store',
   description: 'Shop the latest trends in clothing and accessories',
 };
 

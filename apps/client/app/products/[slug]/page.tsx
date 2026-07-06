@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
   if (!product) return { title: 'Product not found' };
 
   return {
-    title: `${product.name} | MegaShop`,
+    title: `${product.name} | MEGASHOP`,
     description: product.description || `Buy ${product.name} at the best price`,
   };
 }

@@ -13,7 +13,7 @@ import { getProducts } from '@/services/public/products.service';
 import ProductCard from '@/components/products/ProductCard';
 
 export const metadata = {
-  title: 'MegaShop | Products',
+  title: 'MEGASHOP | Products',
   description: 'Browse our product catalog',
 };
 

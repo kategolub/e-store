@@ -1,4 +1,4 @@
-# MegaShop
+# MEGASHOP
 
 A full-stack e-commerce application built with Next.js, Nest.js, MongoDB and TypeScript in a monorepo structure.
 
