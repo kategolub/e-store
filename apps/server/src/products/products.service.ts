@@ -31,16 +31,15 @@ export class ProductsService {
     const search = query.search?.trim();
 
     if (search) {
-      filters.$text = { $search: search };
+      const pattern = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      filters.$or = [
+        { name: { $regex: pattern, $options: 'i' } },
+        { description: { $regex: pattern, $options: 'i' } },
+      ];
     }
 
-    const projection = search ? { score: { $meta: 'textScore' } } : undefined;
-    const sort: Record<string, any> = search
-      ? { score: { $meta: 'textScore' } }
-      : { createdAt: -1 };
-
     const [products, total] = await Promise.all([
-      this.productModel.find(filters, projection).skip(skip).limit(limit).sort(sort),
+      this.productModel.find(filters).skip(skip).limit(limit).sort({ createdAt: -1 }),
       this.productModel.countDocuments(filters),
     ]);
 
