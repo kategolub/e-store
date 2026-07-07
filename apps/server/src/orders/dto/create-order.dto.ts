@@ -5,6 +5,7 @@ import {
   IsPositive,
   IsString,
   IsEmail,
+  IsOptional,
   Min,
   ValidateNested,
   ArrayMinSize,
@@ -26,8 +27,9 @@ export class OrderItemDto {
   @Min(1)
   quantity: number;
 
+  @IsOptional()
   @IsString()
-  image: string;
+  image?: string;
 }
 
 export class CustomerInfoDto {

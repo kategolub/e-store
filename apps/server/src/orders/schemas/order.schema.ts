@@ -20,8 +20,8 @@ export class OrderItem {
   @Prop({ required: true, min: 1 })
   quantity!: number;
 
-  @Prop({ required: true })
-  image!: string;
+  @Prop()
+  image?: string;
 }
 
 @Schema({ _id: false })
