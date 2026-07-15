@@ -32,3 +32,5 @@ next-env.d.ts
 dist/
 
 repomix-output.xml
+.idea/
+.vscode/
